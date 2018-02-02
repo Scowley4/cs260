@@ -190,6 +190,7 @@ nav li a:hover:active{
     padding-left: 15px;
     padding-right: 15px;
     margin: 10px;
+    /* box-shadow: none|h-offset v-offset blur spread color |inset|initial|inherit; */
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     background-color: var(--minor-color);
     position: absolute;

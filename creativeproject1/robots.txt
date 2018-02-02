@@ -1,1 +1,2 @@
-Don't overload my site with robots. It's a small server :P
+User-agent: *
+Disallow: /

@@ -10,8 +10,13 @@ html {
 
     /* Python Blue */
     --major-color: #003F72;
-    /* --major-color: green; */
     --minor-color: #FFD166;
+    --background-color: white;
+
+
+    --major-color: #242424;
+    --minor-color: #FFD166;
+    --background-color: #333333;
 
     /* Purple and yellow */
     /* --major-color: #550EB2;
@@ -31,7 +36,7 @@ body {
     /* padding: 25px; */
     /* position: relative; */
     z-index: auto;
-    /* background-color: var(--minor-color); */
+    background-color: var(--background-color);
 }
 
 div.content{

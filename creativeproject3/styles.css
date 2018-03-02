@@ -159,6 +159,9 @@ nav li a:hover:active{
   grid-template-columns: 1fr 1fr;
   border: 2px solid #f76707;
 }
+form{
+  display: block;
+}
 .split>div {
   padding:20px 0;
   text-align: center;

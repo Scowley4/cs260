@@ -16,7 +16,24 @@
     </header>
     <div id="app" class="content">
       <h1>Color Picker</h1>
-
+      <div class="split">
+        <div><!--Left-->
+          <h2>Add new palettes</h2>
+        </div>
+        <div><!--Right-->
+          <h2>Palettes</h2>
+          <div v-for="palette in palettes">
+            <hr/>
+            {{ palette.name }}
+            <div class="color-grid">
+              <div class="color-box" v-for="color in
+              palette.colors" v-bind:style="{'background-color': color}">
+                {{ color }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

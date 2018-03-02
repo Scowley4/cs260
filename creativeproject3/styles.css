@@ -47,6 +47,7 @@ div.content{
     margin-right: 150px;
     padding-top: 150px;
     padding-bottom: 150px;
+    color: #FAF7F5;
 }
 
 p {
@@ -59,7 +60,6 @@ hr.primary {
 
 
 h1 {
-    color: black;
 }
 .large{
     font-size: 30px
@@ -154,7 +154,34 @@ nav li a:hover:active{
     filter: brightness(95%);
 }
 /* End NAV */
+.split{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 2px solid #f76707;
+}
+.split>div {
+  padding:20px 0;
+  text-align: center;
+  color: #FAF7F5;
+  border: 2px solid #f76707;
+  border-collapse: collapse;
+}
 
+.color-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 10px;
+  margin: 20px;
+}
+.color-grid>div {
+  padding:20px 0;
+}
+.color-box{
+  color: black;
+  padding: 10px;
+  background-color: white;
+  text-align: center;
+}
 .SO-search-result{
     display: grid;
     grid-template-columns: repeat(6, 1fr);

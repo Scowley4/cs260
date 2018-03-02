@@ -1,7 +1,11 @@
 var app = new Vue({
   el: '#app',
   data: {
-      number: 5,
+    palettes: [
+     {name: "BYU Colors", colors: ['#162342','#1D2D5C','#FFFFFF',
+                                   '#E4E4E4','#FFFFFF']},
+     {name:'Princeton', colors: ['#262626','#D88946']}
+    ],
   },
   computed: {
     month: function() {

@@ -1,0 +1,15 @@
+{
+  "name": "creativeproject4",
+  "version": "1.0.0",
+  "description": "Converting color app to have front and back end",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Stephen Cowley",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3"
+  }
+}

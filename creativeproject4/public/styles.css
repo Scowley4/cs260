@@ -195,11 +195,24 @@ form{
 
 .right{
   position: absolute;
-  right: 10px;
-
+}
+.edit{
+  right: 35px;
+}
+.delete{
+  right: 5px;
 }
 .hidden{
   display: none;
+}
+.draghandle{
+  position:absolute;
+  left: 5px;
+  background-color: white;
+  color: black;
+  padding: 5px;
+  cursor: move;
+  user-select: none;
 }
 .SO-search-result{
     display: grid;

@@ -39,40 +39,95 @@ var CSS_COLOR_NAMES =
 var app = new Vue({
   el: '#app',
   data: {
-    paletteName: '',
-    colors: [],
+    //paletteName: '',
+    //colors: [],
+    paletteName: 'Test Palette',
+    colors:[{id:0, colorText:'red'},
+            {id:1, colorText:'blue'},
+            {id:2, colorText:'green'},
+            {id:3, colorText:'yellow'}],
     palettes: [
       //{name:'WordColors', colors: ['red','blue','white','black']},
-      {name:'DEMO: Wedding Colors', colors: ['purple','yellow','silver','white']},
-      {name: "DEMO: BYU Colors", colors: ['#162342','#1D2D5C','#FFFFFF',
-                                    '#E4E4E4']},
+      //{name:'DEMO: Wedding Colors', colors: ['purple','yellow','silver','white']},
+      //{name: "DEMO: BYU Colors", colors: ['#162342','#1D2D5C','#FFFFFF',
+      //                              '#E4E4E4']},
       //{name:'Princeton', colors: ['#262626','#D88946']}
     ],
+    drag: '',
   },
   computed: {
     //No computed values yet
   },
   watch: {
-    number: function(value, oldValue) {
-      //Stuff
-    },
+    //No watch values yet
   },
   created: function() {
     //Called when vue is created
-    //TODO call the server for each of the default colors
+    this.getPalettes();
   },
   methods: {
+    getPalettes: function(){
+      axios.get('/api/palettes').then(response => {
+        this.palettes = response.data;
+        return true;
+      }).catch(err => {
+        console.log('Error in getPalettes');
+      });
+    },
     addPalette: function(){
-      var colorsToAdd = []
-      for (var i=0; i<this.colors.length; i++){
-        colorsToAdd.push(this.colors[i].colorText)
-      }
-      this.palettes.push({name: this.paletteName, colors: colorsToAdd.slice()});
-      this.paletteName = "";
-      this.colors = [];
+      //var colorsToAdd = this.colors.splice();
+      //for (var i=0; i<this.colors.length; i++){
+      //  colorsToAdd.push(this.colors[i].colorText)
+      //}
+      console.log(this.colors);
+      axios.post('/api/palettes', {
+        name: this.paletteName,
+        colors: this.colors,
+        editable: true,
+        deletable: true,
+      }).then(response => {
+        this.paletteName = '';
+        this.colors = [];
+        this.getPalettes();
+        return true;
+      }).catch(err => {
+        console.log('Error in addPalette');
+      });
     },
     addColor: function(){
       this.colors.push({id:this.colors.length, colorText:''});
-    }
+      //this.colors.push('');
+    },
+    editPalette: function(palette){
+      this.paletteName = palette.name;
+      this.colors = palette.colors;
+      var editable = palette.editable;
+      var deletable = palette.deletable;
+      this.deletePalette(palette);
+    },
+    deletePalette: function(palette){
+      axios.delete('/api/palettes/' + palette.id).then(response => {
+        this.getPalettes();
+        return true;
+      }).catch(err => {
+        console.log('Error in delete');
+        console.log(err);
+      });
+    },
+    dragPalette: function(palette) {
+      console.log('drag');
+      this.drag = palette;
+    },
+    dropPalette: function(palette) {
+      axios.put('/api/palettes/' + this.drag.id, {
+        orderTarget: palette.id
+      }).then(response => {
+        this.getItems();
+        return true;
+      }).catch(err => {
+        console.log('Error in delete');
+        console.log(err);
+      });
+    },
   }
 });

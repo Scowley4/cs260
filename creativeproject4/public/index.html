@@ -19,7 +19,7 @@
       <div class="split">
 
         <div><!--Left-->
-          <h2>Add new palettes</h2>
+          <h2>Add or Edit Palettes</h2>
           <form v-on:submit.prevent=>
             <input type="text" v-model="paletteName" placeholder="Palette Name"/>
             <hr width="30%"/>
@@ -39,15 +39,26 @@
           <h2>Palettes</h2>
           <div class="palette-box" v-for="palette in palettes">
             <hr/>
+            <div class='draghandle'
+                 v-on:dragstart="dragPalette(palette)"
+                 v-on:dragover.prevent
+                 v-on:drop="dropPalette(palette)"
+                 >|||</div>
             {{ palette.name }}
-            <button class="right hidden hover-show">
-            Edit
-            </button>
+            <button class="right edit hidden hover-show"
+                    v-on:click="editPalette(palette)"
+                    v-if="palette.editable">Edit</button>
+
+            <button class="right delete hidden hover-show"
+                    v-on:click="deletePalette(palette)"
+                    v-if="palette.deletable">X</button>
+
             <div class="color-grid">
               <div class="color-box" v-for="color in
-              palette.colors" v-bind:style="{'background-color': color}">
+              palette.colors" v-bind:style="{'background-color':
+              color.colorText}">
                 <div style="background-color: white">
-                  {{ color }}
+                  {{ color.colorText }}
                 </div>
 
               </div>
@@ -57,17 +68,15 @@
 
       </div>
     </div>
-
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"
+     integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM="
+     crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
     <script text="type/javascript" src="/script.js"></script>
     <footer>
       <p>
-        <a href="https://github.com/Scowley4/cs260/tree/master/creativeproject3" target="_blank">GitRepo</a>
-         <!-- -
-        <a href="about.html">About</a></li> -
-        <a href="404.html">Privacy Policy</a> -
-        <a href="contact.html">Contact Me</a> -->
+        <a href="https://github.com/Scowley4/cs260/tree/master/creativeproject4" target="_blank">GitRepo</a>
       </p>
       <hr width="50%" color="#fbf7f5"/>
       <p>Copyright © 2018 TheTemplateWebsite (Not really)</p>

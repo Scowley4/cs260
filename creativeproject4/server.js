@@ -10,21 +10,70 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // sets up a directory called 'public' to serve
 app.use(express.static('public'));
 
-let palettes = [];
-let id = 0;
+let palettes = [
+                {
+                  name:'DEMO: Wedding Colors',
+                  colors:[{id:0, colorText:'purple'},
+                          {id:1, colorText:'yellow'},
+                          {id:2, colorText:'silver'},
+                          {id:3, colorText:'white'}],
+                  editable: false,
+                  deletable: false,
+                  id: 1,
+                },
+                {
+                  name:"DEMO: BYU Colors",
+                  colors:[{id:0, colorText:'#162342'},
+                          {id:1, colorText:'#1D2D5C'},
+                          {id:2, colorText:'#FFFFFF'},
+                          {id:3, colorText:'#E4E4E4'}],
+                  editable: false,
+                  deletable: false,
+                  id: 2,
+                },
+               ]
+let id = palettes.length;
 
-app.get('/api/items', (req, res) => {
-  res.send(items);
+app.get('/api/palettes', (req, res) => {
+  res.send(palettes);
 });
 
-// complete items
 app.post('/api/palettes', (req, res) => {
   id = id + 1;
-  let item = {id:id,
-              name:req.body.name,
-              colors:req.body.colors};
-  items.push(item);
-  res.send(item);
+  let palette = {
+                  id:id,
+                  name:req.body.name,
+                  colors:req.body.colors,
+                  editable:req.body.editable,
+                  deletable:req.body.deletable,
+                };
+  palettes.push(palette);
+  res.send(palette);
+});
+
+app.delete('/api/palettes/:id', (req, res) => {
+  let id = parseInt(req.params.id);
+  let removeIndex = palettes.map(palette => { return palette.id; }).indexOf(id);
+  if (removeIndex === -1) {
+    res.status(404).send("Sorry, that item doesn't exist");
+    return;
+  }
+  palettes.splice(removeIndex, 1);
+  res.sendStatus(200);
+});
+
+app.put('/api/palettes/:id', (req, res) => {
+  let id = parseInt(req.params.id);
+  let itemsMap = palettes.map(item => { return item.id; });
+  let index = itemsMap.indexOf(id);
+  let palettes = palettes[index];
+
+  if (req.body.orderChange) {
+    let indexTarget = itemsMap.indexOf(req.body.orderTarget);
+    palettes.splice(index,1);
+    palettes.splice(indexTarget,0, palette);
+  }
+  res.send(palette);
 });
 
 // Handles completion and Drag and drop
@@ -44,31 +93,5 @@ app.put('/api/items/:id', (req, res) => {
   }
   res.send(item);
 });
-
-app.put('/api/sortPriority', (req, res) => {
-  items.sort(function(a,b){
-    if (a.priority=='high')
-      return 1;
-    if (b.priority=='high')
-      return -1;
-    if (a.priority=='medium')
-      return 1;
-    if (b.priority=='medium')
-      return -1;
-    return 1;
-  }).reverse();
-});
-
-app.delete('/api/items/:id', (req, res) => {
-  let id = parseInt(req.params.id);
-  let removeIndex = items.map(item => { return item.id; }).indexOf(id);
-  if (removeIndex === -1) {
-    res.status(404).send("Sorry, that item doesn't exist");
-    return;
-  }
-  items.splice(removeIndex, 1);
-  res.sendStatus(200);
-});
-
 
 app.listen(3000, () => console.log('Server listening on port 3000!'));

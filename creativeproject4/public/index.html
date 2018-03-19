@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lab 2</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="shortcut icon" href="images/favicon.ico" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar-fixed">
+        <h1>Colors</h1>
+        <ul>
+          <li><a class="current" href="index.html">Colors</a></li>
+        </ul>
+      </nav>
+    </header>
+    <div id="app" class="content">
+      <h1>Color Picker</h1>
+      <div class="split">
+
+        <div><!--Left-->
+          <h2>Add new palettes</h2>
+          <form v-on:submit.prevent=>
+            <input type="text" v-model="paletteName" placeholder="Palette Name"/>
+            <hr width="30%"/>
+            <div class="color-input" v-for="color in colors">
+              {{ color.colorText }}</br>
+              <input type="text" v-model="color.colorText"
+              v-bind:style="{'background-color': color.colorText}">
+            </div>
+
+            <button v-on:click="addColor">Add Color</button>
+            <hr/>
+            <button type="submit" v-on:click="addPalette">Add Palette</button>
+          </form>
+        </div><!--Left-->
+
+        <div><!--Right-->
+          <h2>Palettes</h2>
+          <div class="palette-box" v-for="palette in palettes">
+            <hr/>
+            {{ palette.name }}
+            <button class="right hidden hover-show">
+            Edit
+            </button>
+            <div class="color-grid">
+              <div class="color-box" v-for="color in
+              palette.colors" v-bind:style="{'background-color': color}">
+                <div style="background-color: white">
+                  {{ color }}
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div><!--Right-->
+
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+    <script text="type/javascript" src="/script.js"></script>
+    <footer>
+      <p>
+        <a href="https://github.com/Scowley4/cs260/tree/master/creativeproject3" target="_blank">GitRepo</a>
+         <!-- -
+        <a href="about.html">About</a></li> -
+        <a href="404.html">Privacy Policy</a> -
+        <a href="contact.html">Contact Me</a> -->
+      </p>
+      <hr width="50%" color="#fbf7f5"/>
+      <p>Copyright © 2018 TheTemplateWebsite (Not really)</p>
+    </footer>
+  </body>
+</html>

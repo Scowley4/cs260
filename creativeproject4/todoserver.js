@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // sets up a directory called 'public' to serve
 app.use(express.static('public'));
 
-let palettes = [];
+let items = [];
 let id = 0;
 
 app.get('/api/items', (req, res) => {
@@ -18,11 +18,12 @@ app.get('/api/items', (req, res) => {
 });
 
 // complete items
-app.post('/api/palettes', (req, res) => {
+app.post('/api/items', (req, res) => {
   id = id + 1;
   let item = {id:id,
-              name:req.body.name,
-              colors:req.body.colors};
+              text:req.body.text,
+              completed:req.body.completed,
+              priority:req.body.priority};
   items.push(item);
   res.send(item);
 });
